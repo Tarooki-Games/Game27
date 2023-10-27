@@ -49,7 +49,8 @@ public class Controller2D : MonoBehaviour
 
             Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength,Color.red);
 
-            if (hit) {
+            if (hit)
+            {
                 velocity.x = (hit.distance - SkinWidth) * directionX;
                 rayLength = hit.distance;
 
@@ -112,7 +113,8 @@ public class Controller2D : MonoBehaviour
         public Vector2 bottomLeft, bottomRight;
     }
     
-    public struct CollisionInfo {
+    public struct CollisionInfo
+    {
         public bool above, below;
         public bool left, right;
 

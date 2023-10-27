@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     Vector3 velocity;
     float velocityXSmoothing;
 
+    [SerializeField] float slideSpeed = 9.0f;
+
     Controller2D controller;
 
     void Start()
@@ -34,6 +36,14 @@ public class Player : MonoBehaviour
         
         if (Input.GetKeyDown (KeyCode.Space) && controller.collisions.below)
             velocity.y = jumpVelocity;
+
+        if (Input.GetKeyDown(KeyCode.S) && controller.collisions.below)
+        {
+            if (velocity.x > 0)
+                velocity.x += slideSpeed;
+            else
+                velocity.x -= slideSpeed;
+        }
 
         float targetVelocityX = input.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
