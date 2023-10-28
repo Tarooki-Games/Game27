@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 [RequireComponent (typeof (Controller2D))]
 public class Player : MonoBehaviour
 {
@@ -34,16 +35,13 @@ public class Player : MonoBehaviour
 
         Vector2 input = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
         
+        // JUMP
         if (Input.GetKeyDown (KeyCode.Space) && controller.collisions.below)
             velocity.y = jumpVelocity;
 
+        // GROUNDED SLIDE (Remove second condition to make it a dash that can also be performed in the air)
         if (Input.GetKeyDown(KeyCode.S) && controller.collisions.below)
-        {
-            if (velocity.x > 0)
-                velocity.x += slideSpeed;
-            else
-                velocity.x -= slideSpeed;
-        }
+            velocity.x = velocity.x > 0 ? velocity.x += slideSpeed : velocity.x -= slideSpeed;
 
         float targetVelocityX = input.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below)?accelerationTimeGrounded:accelerationTimeAirborne);
@@ -51,3 +49,9 @@ public class Player : MonoBehaviour
         controller.Move (velocity * Time.deltaTime);
     }
 }
+
+
+// if (velocity.x > 0)
+//     velocity.x += slideSpeed;
+// else
+//     velocity.x -= slideSpeed;
